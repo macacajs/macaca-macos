@@ -1,3 +1,3 @@
-# Homebrew Tap for Macaca
+# macaca-applescript
 
-## Usage
+---
