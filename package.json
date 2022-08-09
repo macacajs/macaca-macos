@@ -1,6 +1,6 @@
 {
   "name": "macaca-macos",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Macaca MacOS driver",
   "keywords": [
     "macos",
@@ -17,6 +17,7 @@
   "dependencies": {
     "lodash": "^4.17.21",
     "mkdirp": "^1.0.4",
+    "robotjs": "^0.6.0",
     "xlogger": "^1.0.6"
   },
   "devDependencies": {
