@@ -9,6 +9,7 @@ describe('unit testing', function() {
   const driver = new MacacaMacOS();
 
   before(async () => {
+    const videoDir = __dirname;
     await driver.startDevice({
       recordVideo: {
         dir: videoDir,
