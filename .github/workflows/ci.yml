@@ -12,12 +12,7 @@ on:
 jobs:
   Runner:
     timeout-minutes: 10
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ ubuntu-latest, macOS-latest ]
-        node-version: [ 16 ]
+    runs-on: macOS-latest
     steps:
       - name: Checkout Git Source
         uses: actions/checkout@v3
