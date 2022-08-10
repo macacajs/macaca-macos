@@ -4,8 +4,15 @@ const assert = require('power-assert');
 
 describe('unit testing', function() {
   const driver = new MacacaMacOS();
+  let res;
 
-  it('macOS driver should be ok', () => {
+  it('isAppRunning should be ok', async () => {
     assert(driver);
+
+    driver.startApp('/System/Applications/Notes.app');
+
+    res = await driver.isAppRunning('Notes');
+
+    assert(res);
   });
 });
