@@ -16,7 +16,7 @@
 [node-image]: https://img.shields.io/badge/node.js-%3E=_16-green.svg?logo=node.js
 [node-url]: http://nodejs.org/download/
 
-> [osascript](https://developer.apple.com/documentation/uniformtypeidentifiers/uttype/3551541-osascript)
+> Integrate [robotjs](https://github.com/octalmage/robotjs), [osascript](https://developer.apple.com/documentation/uniformtypeidentifiers/uttype/3551541-osascript) and shell of the operating system to automatically control the MacOS, such as controlling the mouse, keyboard, window operation, etc.
 
 ## Installment
 
