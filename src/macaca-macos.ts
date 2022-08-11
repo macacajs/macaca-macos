@@ -6,8 +6,9 @@ const shell = require('shelljs');
 const robot = require('robotjs');
 
 export class MacacaMacOS {
+  recordingVideoFile;
 
-  async startApp(appFileDir) {
+  startApp(appFileDir) {
     return shell.exec(`open ${appFileDir}`, { silent: true });
   }
 
@@ -94,7 +95,7 @@ export class MacacaMacOS {
   screenShot(picFile: string, opts: {
     rename?: string;
     rectangle?: string; // 通过矩形框 x,y,width,height
-  }) {
+  } = {}) {
     const { rectangle } = opts;
     let cmd = 'screencapture -x -r';
     if (rectangle) {
@@ -106,16 +107,19 @@ export class MacacaMacOS {
   }
 
   /**
-   * 开始录像，返回pid
-   * @param videoFile
+   * 开始录像，返回mov文件路径
    * @param opts
    */
-  startVideo(videoFile: string, opts: {
-    rename?: string;
+  startVideo(opts: {
+    movFile?: string; // 指定保存的mov文件
     rectangle?: string; // 通过矩形框 x,y,width,height
     seconds?: number; // 指定时长
-  }) {
-    const { rectangle, seconds } = opts;
+  } = {}) {
+    if (this.recordingVideoFile) {
+      console.error('存在录制中的录像');
+      return;
+    }
+    const { rectangle, seconds, movFile } = opts;
     // 静音 录像 显示点击
     let cmd = 'screencapture -x -r -v -k';
     if (rectangle) {
@@ -124,32 +128,48 @@ export class MacacaMacOS {
     if (seconds) {
       cmd += ` -V ${seconds}`;
     }
-    cmd += ` ${videoFile}`;
-    const child = shell.exec(cmd, { silent: true, async: true });
-    if (child.pid) {
-      return child.pid;
-    }
+    const saveFile = movFile || `${Helper.tmpdir()}/${Date.now()}.mov`;
+    cmd += ` ${saveFile}`;
+    shell.exec(cmd, { silent: true, async: true });
+    this.recordingVideoFile = saveFile;
   }
 
   /**
    * 结束当前录像
-   * - 转换录像格式为mp4
    * - FIXME robotJs 鼠标点击不会被录下来, 尝试jxa版本
+   * @param destFile
    */
-  async saveVideo(videoFile: string, mp4 = false): Promise<string> {
+  async saveVideo(destFile?: string): Promise<string> {
+    if (
+      destFile
+      && !destFile.endsWith('.mov')
+      && !destFile.endsWith('.mp4')
+    ) {
+      console.error('仅支持mov和mp4格式');
+      return;
+    }
     // 结束录制
+    const movFile = this.recordingVideoFile;
+    this.recordingVideoFile = null;
+    if (!movFile) {
+      console.error('未开始录像');
+      return;
+    }
     await this.keyboardTap('escape', [ 'command', 'control' ]);
     await Helper.waitUntil(() => {
-      return fs.existsSync(videoFile);
+      return fs.existsSync(movFile);
     });
-    if (mp4) {
+    if (destFile) {
       // ffmpeg 转换
-      const fileMp4 = `${videoFile.substring(0, videoFile.lastIndexOf('.'))}.mp4`;
-      const cmd = `ffmpeg -i ${videoFile} -vcodec h264 -an -crf 20 -preset ultrafast -strict -2  -y ${fileMp4}`;
-      shell.exec(cmd, { silent: true });
-      return fileMp4;
+      if (destFile.endsWith('.mp4')) {
+        const cmd = `ffmpeg -i ${movFile} -vcodec h264 -an -crf 20 -preset ultrafast -strict -2  -y ${destFile}`;
+        shell.exec(cmd, { silent: true });
+      } else {
+        shell.cp(movFile, destFile);
+      }
+      return destFile;
     }
-    return videoFile;
+    return movFile;
   }
 
   mouseMoveTo(x: number, y: number) {
