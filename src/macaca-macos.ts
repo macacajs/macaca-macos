@@ -22,6 +22,10 @@ export class MacacaMacOS {
     return jxaUtil.getClipText();
   }
 
+  async setClipText(str: string) {
+    return jxaUtil.setClipText(str);
+  }
+
   /**
    * 仅返回第一个窗口
    * @param name

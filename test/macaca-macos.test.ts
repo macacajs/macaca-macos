@@ -14,9 +14,16 @@ describe('unit testing', function() {
     assert(res);
   });
 
-  it('getMousePos should be ok', async () => {
-    const res = driver.getMousePos();
+  it('mouseGetPos should be ok', async () => {
+    const res = driver.mouseGetPos();
     assert(res);
+  });
+
+  it('Clipboard actions should be ok', async () => {
+    const str = 'Hello world.';
+    await driver.setClipText(str);
+    const res = await driver.getClipText();
+    assert.equal(res, str, '剪贴板内容不符合预期');
   });
 
   it('video should be ok', async function() {
