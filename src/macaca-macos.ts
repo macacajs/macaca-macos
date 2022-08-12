@@ -200,7 +200,7 @@ export class MacacaMacOS {
   }
 
   /**
-   * 鼠标点击
+   * 鼠标点击 当前鼠标所在位置
    * @param opts
    */
   mouseClick(opts: {

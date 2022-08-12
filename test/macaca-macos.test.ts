@@ -1,9 +1,12 @@
 import { MacacaMacOS } from '../src/macaca-macos';
 import { Helper } from '../src/helper';
+import { EDriver } from '../src/enums';
+import * as process from 'process';
 
 const assert = require('power-assert');
 
 describe('unit testing', function() {
+  process.env.DEBUG = 'true';
   const driver = new MacacaMacOS();
   let res;
 
@@ -17,6 +20,12 @@ describe('unit testing', function() {
   it('mouseGetPos should be ok', async () => {
     const res = driver.mouseGetPos();
     assert(res);
+  });
+
+  it('mouseClick should be ok', async () => {
+    driver.mouseClick({
+      driver: EDriver.AppleScript,
+    });
   });
 
   it('Clipboard actions should be ok', async () => {

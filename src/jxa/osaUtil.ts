@@ -27,6 +27,7 @@ export const osaUtil = {
   async execAppleScriptFile(file: string, args = []): Promise<any> {
     if (!file.endsWith('.applescript')) {
       console.error('只支持applescript格式文件');
+      return;
     }
     return new Promise((resolve, reject) => {
       applescript.execFile(file, args, (err, rtn) => {
@@ -45,6 +46,7 @@ export const osaUtil = {
   execScptFile(file: string, args = []) {
     if (!file.endsWith('.scpt')) {
       console.error('只支持scpt格式文件');
+      return;
     }
     const res = shell.exec(`osascript '${file}' ${args.join(' ')} -ss`, { silent: true }).stdout;
     Helper.debug(res);
@@ -60,6 +62,7 @@ export const osaUtil = {
     x: number;
     y: number;
   }) {
+    Helper.debug(opts);
     this.execScptFile(`${scptDir}/mouseClick.scpt`, [ opts.x, opts.y ]);
   },
 };
