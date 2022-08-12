@@ -267,6 +267,7 @@ export const jxaUtil = {
 
   /**
    * 鼠标操作(默认当前位置左键)
+   * - 不稳定，会失效
    */
   async click(opts: {
     x: number;
@@ -279,7 +280,11 @@ export const jxaUtil = {
       mouse.click(opts);
     }, [ mouseLib, opts ]);
   },
+
+  async asSafeActivate(appName: string) {
+    await execJxa((appName) => {
+      const win = Library('window');
+      return win.safeActivate(appName);
+    }, [ appName ]);
+  },
 };
-
-/* eslint-enable */
-

@@ -14,6 +14,11 @@ describe('unit testing', function() {
     assert(res);
   });
 
+  it('getMousePos should be ok', async () => {
+    const res = driver.getMousePos();
+    assert(res);
+  });
+
   it('video should be ok', async function() {
     this.timeout(0);
     driver.startVideo({ rectangle: '0,0,400,600' });

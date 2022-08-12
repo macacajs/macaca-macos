@@ -7,14 +7,14 @@ const shell = require('shelljs');
 
 const executeInOsa = async (code: string, args: any[]): Promise<any> => {
   if (code.includes('Library(')) {
-    const myAsLibDir = `${Helper.getResourcePath()}/applescript/*`;
-    const libDir = `${os.homedir()}/Library/Script\ Libraries`;
-    const libFile = `${libDir}/window.scptd`;
-    if (!fs.existsSync(libDir)) {
-      shell.mkdir('-p', libDir);
+    const scptdDir = `${Helper.getResourcePath()}/applescript/scptd/*`;
+    const userLibDir = `${os.homedir()}/Library/Script\ Libraries`;
+    const libFile = `${userLibDir}/window.scptd`;
+    if (!fs.existsSync(userLibDir)) {
+      shell.mkdir('-p', userLibDir);
     }
     if (!fs.existsSync(libFile)) {
-      shell.cp('-R', myAsLibDir, libDir);
+      shell.cp('-R', scptdDir, userLibDir);
     }
   }
   const envs: any = {
