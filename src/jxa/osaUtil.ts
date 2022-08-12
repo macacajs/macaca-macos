@@ -56,6 +56,7 @@ export const osaUtil = {
   /**
    * applescript 实现
    * jxa运行applescript lib会有问题 只能通过shell执行
+   * - 适用原生MacOS的应用（实际点击的是坐标所在的UI元素）,不适用Electron
    * @param opts
    */
   click(opts: {

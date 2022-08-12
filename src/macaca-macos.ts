@@ -214,7 +214,9 @@ export class MacacaMacOS {
       doubleClick = false,
     } = opts;
     if (driver === EDriver.AppleScript) {
-      return osaUtil.click(this.mouseGetPos());
+      const pos = this.mouseGetPos();
+      Helper.debug('click', pos);
+      return osaUtil.click(pos);
     }
     robot.mouseClick(button, doubleClick);
   }
