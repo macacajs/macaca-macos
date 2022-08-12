@@ -121,15 +121,27 @@ export class MacacaMacOS {
     }
     const { rectangle, seconds, movFile } = opts;
     // 静音 录像 显示点击
-    let cmd = 'screencapture -x -r -v -k';
+    let args = [
+      '-x',
+      '-r',
+      '-v',
+      '-k'
+    ];
     if (rectangle) {
-      cmd += ` -R ${rectangle}`;
+      args = args.concat([
+        '-R',
+        rectangle,
+      ]);
     }
     if (seconds) {
-      cmd += ` -V ${seconds}`;
+      args = args.concat([
+        '-V',
+        seconds,
+      ]);
     }
     const saveFile = movFile || `${Helper.tmpdir()}/${Date.now()}.mov`;
-    cmd += ` ${saveFile}`;
+    args.push(saveFile);
+    const cmd = `screencapture ${args.join(' ')}`;
     shell.exec(cmd, { silent: true, async: true });
     this.recordingVideoFile = saveFile;
   }
