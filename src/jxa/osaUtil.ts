@@ -48,7 +48,10 @@ export const osaUtil = {
       console.error('只支持scpt格式文件');
       return;
     }
-    const res = shell.exec(`osascript '${file}' ${args.join(' ')} -ss`, { silent: true }).stdout;
+    shell.chmod('+x', file);
+    const cmd = `osascript '${file}' ${args.join(' ')} -ss`;
+    Helper.debug(cmd);
+    const res = shell.exec(cmd, { silent: true }).stdout;
     Helper.debug(res);
     return res;
   },
@@ -57,6 +60,7 @@ export const osaUtil = {
    * applescript 实现
    * jxa运行applescript lib会有问题 只能通过shell执行
    * - 适用原生MacOS的应用（实际点击的是坐标所在的UI元素）,不适用Electron
+   * - FIXME 似乎只能点击到到执行脚本的应用窗口，否则卡死
    * @param opts
    */
   click(opts: {

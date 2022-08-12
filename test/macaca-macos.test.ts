@@ -22,6 +22,7 @@ describe('unit testing', function() {
     assert(res);
   });
 
+  // FIXME 不稳定，每次执行后脚本文件会变更
   it('mouseClick should be ok', async () => {
     driver.mouseClick({
       driver: EDriver.AppleScript,
