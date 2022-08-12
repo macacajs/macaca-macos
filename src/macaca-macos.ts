@@ -200,7 +200,6 @@ export class MacacaMacOS {
    * @param opts
    */
   mouseClick(opts: {
-    use?: string;
     button?: string; // left | middle | right
     doubleClick?: boolean; // for robotJs only
     driver?: EDriver;
