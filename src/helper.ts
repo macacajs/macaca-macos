@@ -1,3 +1,6 @@
+import os from 'os';
+import fs from 'fs';
+
 const path = require('path');
 
 export class Helper {
@@ -47,6 +50,14 @@ export class Helper {
       }
     }
     return false;
+  }
+
+  static tmpdir() {
+    // mac 环境需要转换
+    if (os.platform() === 'darwin') {
+      return fs.realpathSync(os.tmpdir());
+    }
+    return os.tmpdir();
   }
 
   /**
