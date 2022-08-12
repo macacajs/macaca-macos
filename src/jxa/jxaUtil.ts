@@ -42,7 +42,7 @@ export const jxaUtil = {
       app.includeStandardAdditions = true;
       return app.theClipboard();
     }, []);
-    Helper.debug(res);
+    Helper.debug('clipText:', res);
     return res;
   },
 
@@ -98,29 +98,6 @@ export const jxaUtil = {
     }
   },
 
-  /**
-   * 获取所有app的位置和长宽
-   * - 不可见的窗口无法查到
-   * - 一个app可能会有多个窗口
-   */
-  async getAllAppSizePosition() {
-    const res = await execJxa(() => {
-      const window = Library('window');
-      return window.getAllAppSizePosition();
-    }, []);
-    const result = [];
-    const names = res[0];
-    const sizes = res[1];
-    const positions = res[2];
-    for (let i = 0; i < names.length; i++) {
-      result.push({
-        name: names[i],
-        size: sizes[i],
-        position: positions[i],
-      });
-    }
-    return result;
-  },
   /**
    * 关闭app
    */
@@ -267,6 +244,7 @@ export const jxaUtil = {
 
   /**
    * 鼠标操作(默认当前位置左键)
+   * - 不稳定，会失效
    */
   async click(opts: {
     x: number;
@@ -280,6 +258,3 @@ export const jxaUtil = {
     }, [ mouseLib, opts ]);
   },
 };
-
-/* eslint-enable */
-
