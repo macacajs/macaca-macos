@@ -1,6 +1,8 @@
 import fs from 'fs';
 import { jxaUtil } from './jxa/jxaUtil';
 import { Helper } from './helper';
+import { EDriver } from './enums';
+import { osaUtil } from './jxa/osaUtil';
 
 const shell = require('shelljs');
 const robot = require('robotjs');
@@ -16,12 +18,12 @@ export class MacacaMacOS {
     return robot.getPixelColor(x, y);
   }
 
-  getMousePos() {
-    return robot.getMousePos();
-  }
-
   async getClipText() {
     return jxaUtil.getClipText();
+  }
+
+  async setClipText(str: string) {
+    return jxaUtil.setClipText(str);
   }
 
   /**
@@ -47,7 +49,16 @@ export class MacacaMacOS {
     return jxaUtil.isAppRunning(name);
   }
 
-  async focusApp(name: string) {
+  async focusApp(name: string, opts: {
+    driver?: EDriver;
+  } = {}) {
+    const {
+      driver = EDriver.RobotJs,
+    } = opts;
+    if (driver === EDriver.AppleScript) {
+      return jxaUtil.asSafeActivate(name);
+    }
+    // default
     return jxaUtil.focusApp(name);
   }
 
@@ -125,7 +136,7 @@ export class MacacaMacOS {
       '-x',
       '-r',
       '-v',
-      '-k'
+      '-k',
     ];
     if (rectangle) {
       args = args.concat([
@@ -136,7 +147,7 @@ export class MacacaMacOS {
     if (seconds) {
       args = args.concat([
         '-V',
-        seconds,
+        `${seconds}`,
       ]);
     }
     const saveFile = movFile || `${Helper.tmpdir()}/${Date.now()}.mov`;
@@ -189,12 +200,23 @@ export class MacacaMacOS {
   }
 
   /**
-   * 鼠标点击
-   * @param bt left | middle | right
-   * @param double
+   * 鼠标点击 当前鼠标所在位置
+   * @param opts
    */
-  mouseClick(bt = 'left', double?: boolean) {
-    robot.mouseClick(bt, double);
+  mouseClick(opts: {
+    button?: string; // left | middle | right
+    doubleClick?: boolean; // for robotJs only
+    driver?: EDriver;
+  } = {}) {
+    const {
+      driver = EDriver.RobotJs,
+      button = 'left',
+      doubleClick = false,
+    } = opts;
+    if (driver === EDriver.AppleScript) {
+      return osaUtil.click(this.mouseGetPos());
+    }
+    robot.mouseClick(button, doubleClick);
   }
 
   mouseDrag(x: number, y: number) {
