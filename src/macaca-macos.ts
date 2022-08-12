@@ -143,7 +143,7 @@ export class MacacaMacOS {
     if (seconds) {
       args = args.concat([
         '-V',
-        seconds,
+        `${seconds}`,
       ]);
     }
     const saveFile = movFile || `${Helper.tmpdir()}/${Date.now()}.mov`;
