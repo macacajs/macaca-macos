@@ -10,8 +10,15 @@ const robot = require('robotjs');
 export class MacacaMacOS {
   recordingVideoFile;
 
-  startApp(appFileDir) {
-    return shell.exec(`open ${appFileDir}`, { silent: true });
+  async hideAllApp() {
+    await osaUtil.hideAllApp();
+  }
+
+  async startApp(appNameOrFile) {
+    if (appNameOrFile.startsWith('/')) {
+      return shell.exec(`open ${appNameOrFile}`, { silent: true });
+    }
+    return await osaUtil.safeLaunchApp(appNameOrFile);
   }
 
   getPixelColor(x, y) {
@@ -31,7 +38,7 @@ export class MacacaMacOS {
    * @param name
    */
   async getAppSizePosition(name: string) {
-    const ress = await jxaUtil.getAllAppSizePosition();
+    const ress = await osaUtil.getAllAppSizePosition();
     const res = ress.find(it => {
       return it.name === name;
     });
@@ -53,13 +60,13 @@ export class MacacaMacOS {
     driver?: EDriver;
   } = {}) {
     const {
-      driver = EDriver.RobotJs,
+      driver = EDriver.AppleScript,
     } = opts;
     if (driver === EDriver.AppleScript) {
-      return jxaUtil.asSafeActivate(name);
+      return osaUtil.focusApp(name);
+    } else if (driver === EDriver.JXA) {
+      return jxaUtil.focusApp(name);
     }
-    // default
-    return jxaUtil.focusApp(name);
   }
 
   /**
@@ -214,7 +221,9 @@ export class MacacaMacOS {
       doubleClick = false,
     } = opts;
     if (driver === EDriver.AppleScript) {
-      return osaUtil.click(this.mouseGetPos());
+      const pos = this.mouseGetPos();
+      Helper.debug('click', pos);
+      return osaUtil.click(pos);
     }
     robot.mouseClick(button, doubleClick);
   }

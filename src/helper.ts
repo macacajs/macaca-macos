@@ -10,7 +10,7 @@ export class Helper {
    * @param items
    */
   static debug(...items) {
-    if (process.env.DEBUG) {
+    if (process.env.MACACA_MACOS_DEBUG) {
       console.log(...items);
     }
   }
