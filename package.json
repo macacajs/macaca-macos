@@ -44,7 +44,7 @@
   "scripts": {
     "test": "nyc --reporter=lcov --reporter=text mocha 'test/**/*.test.ts' --require ts-node/register --recursive",
     "lint": "eslint . --ext .ts,js --fix src test",
-    "build": "rm -rf ./dist && ./node_modules/typescript/bin/tsc && cp -r ./resource ./dist/resource && grep -rl 'ts-node' ./dist/bin | xargs sed -i '' 's/ts-node/node/g'",
+    "build": "sh ./build.sh",
     "prepublishOnly": "npm run build",
     "contributor": "git-contributor"
   },

@@ -1,3 +1,1 @@
 --reporter spec
---require ts-node/register
---recursive
