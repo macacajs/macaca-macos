@@ -35,13 +35,19 @@ program
   .command('relative_mouse_pos [appName]')
   .alias('rmp')
   .description('获取鼠标在APP上的相对位置(app界面左上角坐标: 0, 0)')
-  .action(async (appName) => {
+  .option('-c, --color', '顺带获取点位颜色hex值', false)
+  .action(async (appName, opts) => {
+    const { color } = opts;
     const driver = new MacacaMacOS();
     const realPos = driver.mouseGetPos();
     const appPos = await driver.getAppSizePosition(appName);
-    const relativePos = `${realPos.x - appPos.topLeftX},${realPos.y - appPos.topLeftY}`;
-    console.log(`${appName}窗口相对坐标: ${relativePos} 已复制到剪贴板`);
+    let relativePos = `${realPos.x - appPos.topLeftX},${realPos.y - appPos.topLeftY}`;
+    if (color) {
+      const colorHex = driver.getPixelColor(realPos.x, realPos.y);
+      relativePos = `${relativePos} ${colorHex}`;
+    }
     await driver.setClipText(relativePos);
+    console.log(`${appName}窗口相对坐标: ${relativePos} 已复制到剪贴板`);
   });
 
 program.parse(process.argv);
