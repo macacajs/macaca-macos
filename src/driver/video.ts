@@ -1,8 +1,10 @@
 import fs from 'fs';
 import shell from 'shelljs';
 import { Helper } from '../helper';
+import mixin from '../mixin';
+import KeyboardDriver from './keyboard';
 
-export default class VideoDriver {
+class VideoDriver {
   recordingVideoFile: string;
   /**
    * 开始录像，返回mov文件路径
@@ -65,7 +67,7 @@ export default class VideoDriver {
       console.error('未开始录像');
       return;
     }
-    // await this.keyboardTap('escape', [ 'command', 'control' ]);
+    await this.keyboardTap('escape', [ 'command', 'control' ]);
     await Helper.waitUntil(() => {
       return fs.existsSync(movFile);
     });
@@ -82,3 +84,11 @@ export default class VideoDriver {
     return movFile;
   }
 }
+
+interface VideoDriver extends KeyboardDriver {}
+
+mixin(VideoDriver, [
+  KeyboardDriver,
+]);
+
+export default VideoDriver;
