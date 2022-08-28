@@ -21,7 +21,7 @@
 ## Installment
 
 ```bash
-$ npm i macaca-macos -g
+$ npm i macaca-macos --save-dev
 ```
 
 <!-- GITCONTRIBUTOR_START -->
