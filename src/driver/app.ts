@@ -45,4 +45,36 @@ export default class AppDriver {
       });
     }
   }
+
+  /**
+   * 仅返回第一个窗口
+   * @param name
+   */
+  async getAppSizePosition(name: string) {
+    const ress = await osaUtil.getAllAppSizePosition();
+    const res = ress.find(it => {
+      return it.name === name;
+    });
+    if (res && res.position.length > 0) {
+      return {
+        topLeftX: res.position[0][0],
+        topLeftY: res.position[0][1],
+        width: res.size[0][0],
+        height: res.size[0][1],
+      };
+    }
+  }
+
+  async resizePosition(opts: {
+    name: string;
+    topLeftX?: number;
+    topLeftY?: number;
+    width: number;
+    height: number;
+  }) {
+    await Helper.waitUntil(async () => {
+      return this.getAppSizePosition(opts.name);
+    }, 10E3);
+    await jxaUtil.resizePosition(opts);
+  }
 }
