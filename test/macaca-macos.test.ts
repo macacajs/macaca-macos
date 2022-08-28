@@ -1,4 +1,4 @@
-import { MacacaMacOS } from '../src/macaca-macos';
+import MacacaMacOS from '../src/macaca-macos';
 import { Helper } from '../src/helper';
 import { EDriver } from '../src/enums';
 import * as process from 'process';
