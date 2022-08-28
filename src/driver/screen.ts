@@ -34,4 +34,8 @@ export default class ScreenDriver {
     shell.exec(cmd);
     return picFile;
   }
+
+  getPixelColor(x, y) {
+    return robot.getPixelColor(x, y);
+  }
 }
