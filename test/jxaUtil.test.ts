@@ -1,7 +1,6 @@
 import { jxaUtil } from '../src/core/jxa/jxaUtil';
 import MacacaMacOS from '../src/macaca-macos';
-
-const assert = require('power-assert');
+import assert from 'power-assert';
 
 describe.skip('jxaUtil unit testing', function() {
 
