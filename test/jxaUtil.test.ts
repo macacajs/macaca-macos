@@ -1,4 +1,4 @@
-import { jxaUtil } from '../src/jxa/jxaUtil';
+import { jxaUtil } from '../src/core/jxa/jxaUtil';
 import MacacaMacOS from '../src/macaca-macos';
 
 const assert = require('power-assert');

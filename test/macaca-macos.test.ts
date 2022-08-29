@@ -1,6 +1,6 @@
 import MacacaMacOS from '../src/macaca-macos';
-import { Helper } from '../src/helper';
-import { EDriver } from '../src/enums';
+import { Helper } from '../src/core/helper';
+import { EDriver } from '../src/core/enums';
 import * as process from 'process';
 
 const assert = require('power-assert');
