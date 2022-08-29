@@ -1,4 +1,4 @@
-import { jxaUtil } from '../jxa/jxaUtil';
+import { jxaUtil } from '../core/jxa/jxaUtil';
 
 export default class ClipboardDriver {
   /**

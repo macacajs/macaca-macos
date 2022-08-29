@@ -4,7 +4,7 @@
  * @Description macaca-macos cli工具
  */
 
-import { MacacaMacOS } from '../src/macaca-macos';
+import MacacaMacOS from '..';
 
 process.setMaxListeners(0);
 process.on('uncaughtException', function(err) {

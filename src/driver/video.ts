@@ -1,7 +1,7 @@
 import fs from 'fs';
 import shell from 'shelljs';
-import { Helper } from '../helper';
-import mixin from '../mixin';
+import { Helper } from '../core/helper';
+import mixin from '../core/mixin';
 import KeyboardDriver from './keyboard';
 
 class VideoDriver {

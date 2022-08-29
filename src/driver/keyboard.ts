@@ -1,6 +1,6 @@
 import robot from 'robotjs';
-import { jxaUtil } from '../jxa/jxaUtil';
-import { Helper } from '../helper';
+import { jxaUtil } from '../core/jxa/jxaUtil';
+import { Helper } from '../core/helper';
 
 export default class KeyboardDriver {
   /**
