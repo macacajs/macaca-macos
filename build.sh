@@ -7,5 +7,5 @@ rm -rf ./dist
 # 3. move resouce
 cp -r ./resource ./dist/resource
 
-# 4. replace ts-node
+# 4. replace ts-node to node
 grep -rl 'ts-node' ./dist/bin | xargs sed -i '' 's/ts-node/node/g'
