@@ -1,7 +1,6 @@
-import { osaUtil } from '../src/jxa/osaUtil';
+import { osaUtil } from '../src/core/jxa/osaUtil';
 import MacacaMacOS from '../src/macaca-macos';
-
-const assert = require('power-assert');
+import assert from 'power-assert';
 
 describe('osaUtil unit testing', function() {
 

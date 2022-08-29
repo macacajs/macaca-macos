@@ -1,16 +1,15 @@
 import MacacaMacOS from '../src/macaca-macos';
-import { Helper } from '../src/helper';
-import { EDriver } from '../src/enums';
+import { Helper } from '../src/core/helper';
+import { EDriver } from '../src/core/enums';
 import * as process from 'process';
-
-const assert = require('power-assert');
+import assert from 'power-assert';
 
 describe('macaca-macos unit testing', function() {
   process.env.MACACA_MACOS_DEBUG = 'true';
   const driver = new MacacaMacOS();
   let res;
 
-  it('isAppRunning should be ok', async () => {
+  it.skip('isAppRunning should be ok', async () => {
     assert(driver);
     await driver.startApp('/System/Applications/Notes.app');
     res = await driver.isAppRunning('Notes');
