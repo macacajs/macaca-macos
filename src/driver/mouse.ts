@@ -1,7 +1,7 @@
 import robot from 'robotjs';
-import { Helper } from '../helper';
-import { EDriver } from '../enums';
-import { osaUtil } from '../jxa/osaUtil';
+import { Helper } from '../core/helper';
+import { EDriver } from '../core/enums';
+import { osaUtil } from '../core/jxa/osaUtil';
 
 export default class MouseDriver {
   mouseMoveTo(x: number, y: number) {

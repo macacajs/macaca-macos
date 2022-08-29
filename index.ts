@@ -1,4 +1,3 @@
-export { MacacaMacOS } from './src/macaca-macos';
-export { jxaUtil } from './src/jxa/jxaUtil';
-export { osaUtil } from './src/jxa/osaUtil';
-export * from './src/enums';
+import MacacaMacOS from './src/macaca-macos';
+export default MacacaMacOS;
+export * from './src/core/enums';

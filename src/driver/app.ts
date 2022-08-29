@@ -1,8 +1,8 @@
 import shell from 'shelljs';
-import { Helper } from '../helper';
-import { EDriver } from '../enums';
-import { osaUtil } from '../jxa/osaUtil';
-import { jxaUtil } from '../jxa/jxaUtil';
+import { Helper } from '../core/helper';
+import { EDriver } from '../core/enums';
+import { osaUtil } from '../core/jxa/osaUtil';
+import { jxaUtil } from '../core/jxa/jxaUtil';
 
 export default class AppDriver {
   async hideAllApp() {
