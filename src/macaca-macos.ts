@@ -7,13 +7,14 @@ import VideoDriver from './driver/video';
 import ScreenDriver from './driver/screen';
 import { jxaUtil } from './core/jxa/jxaUtil';
 import { osaUtil } from './core/jxa/osaUtil';
+import NetworkDriver from './driver/network';
 
 class MacacaMacOS {
   static jxaUtil = jxaUtil;
   static osaUtil = osaUtil;
 }
 
-interface MacacaMacOS extends AppDriver, MouseDriver, KeyboardDriver, ClipboardDriver, VideoDriver, ScreenDriver {}
+interface MacacaMacOS extends AppDriver, MouseDriver, KeyboardDriver, ClipboardDriver, VideoDriver, ScreenDriver, NetworkDriver {}
 
 mixin(MacacaMacOS, [
   AppDriver,
@@ -22,6 +23,7 @@ mixin(MacacaMacOS, [
   ClipboardDriver,
   VideoDriver,
   ScreenDriver,
+  NetworkDriver,
 ]);
 
 export default MacacaMacOS;
