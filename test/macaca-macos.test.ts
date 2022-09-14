@@ -48,4 +48,21 @@ describe('macaca-macos unit testing', function() {
     await driver.focusApp('Notes');
     console.log('end');
   });
+
+  describe('Network driver test', function() {
+
+    it('wifi device name should work', async function() {
+      this.timeout(0);
+      const name = driver.getWifiDeviceName();
+      assert(name, 'wifi设备查询异常');
+    });
+
+    it('wifi device turn on should work', async function() {
+      this.timeout(0);
+      driver.wifiTurnOn();
+      const isWifiOn = driver.isWifiOn();
+      assert(isWifiOn, 'wifi状态检查异常');
+    });
+
+  });
 });

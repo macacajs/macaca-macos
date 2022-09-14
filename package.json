@@ -1,6 +1,6 @@
 {
   "name": "macaca-macos",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "description": "Macaca MacOS driver",
   "keywords": [
     "macos",
@@ -45,7 +45,7 @@
     "test": "nyc --reporter=lcov --reporter=text mocha 'test/**/*.test.ts' --require ts-node/register --recursive",
     "lint": "eslint . --ext .ts,js",
     "build": "sh ./build.sh",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "npm run lint && npm run build",
     "contributor": "git-contributor"
   },
   "husky": {

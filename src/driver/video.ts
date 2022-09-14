@@ -4,7 +4,7 @@ import { Helper } from '../core/helper';
 import mixin from '../core/mixin';
 import KeyboardDriver from './keyboard';
 
-class VideoDriver {
+class VideoDriver extends KeyboardDriver {
   recordingVideoFile: string;
   /**
    * 开始录像，返回mov文件路径
@@ -84,8 +84,6 @@ class VideoDriver {
     return movFile;
   }
 }
-
-interface VideoDriver extends KeyboardDriver {}
 
 mixin(VideoDriver, [
   KeyboardDriver,
