@@ -3,10 +3,6 @@
 module.exports = {
   root: true,
   extends: 'eslint-config-egg',
-  parserOptions: {
-    ecmaVersion: 2020,
-  },
-  plugins: [],
   rules: {
     'valid-jsdoc': 0,
     'no-script-url': 0,
