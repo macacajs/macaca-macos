@@ -1,6 +1,6 @@
 {
   "name": "macaca-macos",
-  "version": "0.2.12",
+  "version": "0.2.13",
   "description": "Macaca MacOS driver",
   "keywords": [
     "macos",
@@ -19,8 +19,10 @@
     "applescript": "^1.0.0",
     "chalk": "^4.1.0",
     "commander": "^7.2.0",
-    "robotjs": "^0.6.0",
     "shelljs": "^0.8.5"
+  },
+  "optionalDependencies": {
+    "robotjs": "^0.6.0"
   },
   "devDependencies": {
     "@jxa/global-type": "^1.3.5",
