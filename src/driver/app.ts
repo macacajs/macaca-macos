@@ -73,9 +73,10 @@ export default class AppDriver {
     name: string;
     topLeftX?: number;
     topLeftY?: number;
-    width: number;
-    height: number;
+    width?: number;
+    height?: number;
   }) {
+    // app 窗口存在
     await Helper.waitUntil(async () => {
       return this.getAppSizePosition(opts.name);
     }, 10E3);

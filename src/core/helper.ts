@@ -6,6 +6,19 @@ const path = require('path');
 export class Helper {
 
   /**
+   * 获取版本
+   */
+  static getPkgVersion(): string {
+    let pkg: any = {};
+    if (__dirname.includes('/dist/src/core')) {
+      pkg = require('../../../package.json');
+    } else {
+      pkg = require('../../package.json');
+    }
+    return pkg.version;
+  }
+
+  /**
    * 调试日志
    * @param items
    */
@@ -16,6 +29,9 @@ export class Helper {
   }
 
   static getResourcePath(): string {
+    if (__dirname.includes('/dist/src/core')) {
+      return path.resolve(__dirname, '../../resource');
+    }
     return path.resolve(__dirname, '../resource');
   }
 
