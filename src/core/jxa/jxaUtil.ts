@@ -118,19 +118,31 @@ export const jxaUtil = {
     name: string;
     topLeftX?: number;
     topLeftY?: number;
-    width: number;
-    height: number;
+    width?: number;
+    height?: number;
   }) {
     opts.topLeftX = opts.topLeftX || 0;
     opts.topLeftY = opts.topLeftY || 0;
-    await execJxa((opts) => {
-      const window = Library('window');
-      const app = Application(opts.name);
-      if (app.running()) {
-        app.activate();
-        window.sizePosition(opts.name, opts.topLeftX, opts.topLeftY, opts.width, opts.height);
-      }
-    }, [ opts ]);
+    if (opts.width && opts.height) {
+      await execJxa((opts) => {
+        const window = Library('window');
+        const app = Application(opts.name);
+        if (app.running()) {
+          app.activate();
+          window.sizePosition(opts.name, opts.topLeftX, opts.topLeftY, opts.width, opts.height);
+        }
+      }, [ opts ]);
+    } else {
+      // 仅移动位置
+      await execJxa((opts) => {
+        const window = Library('window');
+        const app = Application(opts.name);
+        if (app.running()) {
+          app.activate();
+          window.setPosition(opts.name, opts.topLeftX, opts.topLeftY);
+        }
+      }, [ opts ]);
+    }
   },
 
   /**
