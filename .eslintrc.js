@@ -26,5 +26,6 @@ module.exports = {
     'one-var': 0,
     'no-sparse-arrays': 0,
     'no-useless-concat': 0,
+    '@typescript-eslint/ban-types': 0,
   },
 };
