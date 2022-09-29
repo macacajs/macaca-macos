@@ -10,7 +10,7 @@ export class Helper {
    */
   static getPkgVersion(): string {
     let pkg: any = {};
-    if (__dirname.includes('/dist/src/core/jxa')) {
+    if (__dirname.includes('/dist/src/core')) {
       pkg = require('../../../package.json');
     } else {
       pkg = require('../../package.json');
@@ -29,6 +29,9 @@ export class Helper {
   }
 
   static getResourcePath(): string {
+    if (__dirname.includes('/dist/src/core')) {
+      return path.resolve(__dirname, '../../resource');
+    }
     return path.resolve(__dirname, '../resource');
   }
 

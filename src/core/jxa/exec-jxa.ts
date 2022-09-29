@@ -8,7 +8,7 @@ const shell = require('shelljs');
 const executeInOsa = async (code: string, args: any[]): Promise<any> => {
   // 检查并更新lib
   if (code.includes('Library(')) {
-    const scptdDir = `${Helper.getResourcePath()}/applescript/scptd/*`;
+    const scptdDir = `${Helper.getResourcePath()}/applescript/scptd`;
     const userLibDir = `${os.homedir()}/Library/Script\ Libraries`;
     const versionFile = `${userLibDir}/macaca-macos.txt`;
     const version = Helper.getPkgVersion();
@@ -18,12 +18,12 @@ const executeInOsa = async (code: string, args: any[]): Promise<any> => {
     if (fs.existsSync(versionFile)) {
       const userVersion = fs.readFileSync(versionFile, 'utf-8').toString().trim();
       if (userVersion !== version) {
-        shell.cp('-R', scptdDir, userLibDir);
+        shell.cp('-R', `${scptdDir}/*`, userLibDir);
         shell.rm('-rf', versionFile);
         fs.writeFileSync(versionFile, version);
       }
     } else {
-      shell.cp('-R', scptdDir, userLibDir);
+      shell.cp('-R', `${scptdDir}/*`, userLibDir);
       fs.writeFileSync(versionFile, version);
     }
   }
