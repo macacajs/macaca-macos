@@ -1,7 +1,6 @@
 import MacacaMacOS from '../src/macaca-macos';
 import { Helper } from '../src/core/helper';
 import { EDriver } from '../src/core/enums';
-import * as process from 'process';
 import assert from 'power-assert';
 
 describe('macaca-macos unit testing', function() {
@@ -49,7 +48,7 @@ describe('macaca-macos unit testing', function() {
     console.log('end');
   });
 
-  describe('Network driver test', function() {
+  describe.skip('Network driver test', function() {
 
     it('wifi device name should work', async function() {
       this.timeout(0);

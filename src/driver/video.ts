@@ -48,7 +48,6 @@ class VideoDriver extends KeyboardDriver {
 
   /**
    * 结束当前录像
-   * - FIXME robotJs 鼠标点击不会被录下来, 尝试jxa版本
    * @param destFile
    */
   async saveVideo(destFile?: string): Promise<string> {
@@ -67,10 +66,13 @@ class VideoDriver extends KeyboardDriver {
       console.error('未开始录像');
       return;
     }
+    // 触发 screencapture 结束录像并保存录像文件
     await this.keyboardTap('escape', [ 'command', 'control' ]);
     await Helper.waitUntil(() => {
       return fs.existsSync(movFile);
     });
+    // 完成 screencapture 程序退出
+    await this.keyboardTap('escape');
     if (destFile) {
       // ffmpeg 转换
       if (destFile.endsWith('.mp4')) {

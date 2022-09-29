@@ -1,7 +1,7 @@
 #!/usr/bin/env ts-node
 
 /**
- * @Description macaca-macos cli工具
+ * @description macaca-macos cli工具
  */
 
 import MacacaMacOS from '..';

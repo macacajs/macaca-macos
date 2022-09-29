@@ -4,7 +4,7 @@ export default function applyMixins(derivedCtor: any, constructors: any[]) {
       Object.defineProperty(
         derivedCtor.prototype,
         name,
-        Object.getOwnPropertyDescriptor(baseCtor.prototype, name) || Object.create(null)
+        Object.getOwnPropertyDescriptor(baseCtor.prototype, name) || Object.create(null),
       );
     });
   });

@@ -65,6 +65,10 @@ export default class AppDriver {
     }
   }
 
+  /**
+   * 设置app窗口位置
+   * @param opts
+   */
   async resizePosition(opts: {
     name: string;
     topLeftX?: number;
