@@ -239,7 +239,6 @@ export const jxaUtil = {
     Helper.debug(res);
     return res;
   },
-
   /**
    * 激活聚焦
    * @param appName

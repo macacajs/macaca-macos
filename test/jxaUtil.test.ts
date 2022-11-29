@@ -9,4 +9,5 @@ describe.skip('jxaUtil unit testing', function() {
     const win = await new MacacaMacOS().getAppSizePosition('Notes');
     assert(win);
   });
+
 });

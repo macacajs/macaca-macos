@@ -5,6 +5,7 @@
  */
 
 import MacacaMacOS from '..';
+import { Helper } from '../src/core/helper';
 
 process.setMaxListeners(0);
 process.on('uncaughtException', function(err) {
@@ -29,7 +30,7 @@ const getLogoStr = () => {
 
 program
   .addHelpText('before', getLogoStr())
-  .version('1.0.0');
+  .version(Helper.getPkgVersion());
 
 program
   .command('relative_mouse_pos [appName]')
@@ -48,6 +49,24 @@ program
     }
     await driver.setClipText(relativePos);
     console.log(`${appName}窗口相对坐标: ${relativePos} 已复制到剪贴板`);
+  });
+
+program
+  .command('resize [appName]')
+  .description('设置窗口大小和位置')
+  .option('-w, --width <number>', '宽', parseInt)
+  .option('-h, --height <number>', '高', parseInt)
+  .option('-p, --position', '设置app左上角起点 x,y', '0,50')
+  .action(async (appName, width, height, opts) => {
+    const { position } = opts;
+    const driver = new MacacaMacOS();
+    await driver.resizePosition({
+      name: appName,
+      topLeftX: Number.parseInt(position.split(','))[0],
+      topLeftY: Number.parseInt(position.split(','))[1],
+      width, height,
+    });
+    console.log('success');
   });
 
 program.parse(process.argv);

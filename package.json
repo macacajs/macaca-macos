@@ -1,6 +1,6 @@
 {
   "name": "macaca-macos",
-  "version": "0.2.20",
+  "version": "0.2.22",
   "description": "Macaca MacOS driver",
   "keywords": [
     "macos",
@@ -19,6 +19,7 @@
     "applescript": "^1.0.0",
     "chalk": "^4.1.0",
     "commander": "^7.2.0",
+    "npm-update": "3",
     "shelljs": "^0.8.5"
   },
   "optionalDependencies": {
