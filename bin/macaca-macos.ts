@@ -56,9 +56,9 @@ program
   .description('设置窗口大小和位置')
   .option('-w, --width <number>', '宽', parseInt)
   .option('-h, --height <number>', '高', parseInt)
-  .option('-p, --position', '设置app左上角起点 x,y', '0,50')
-  .action(async (appName, width, height, opts) => {
-    const { position } = opts;
+  .option('-p, --position <value>', '设置app左上角起点 x,y', '0,100')
+  .action(async (appName, opts) => {
+    const { position, width, height } = opts;
     const driver = new MacacaMacOS();
     await driver.resizePosition({
       name: appName,
