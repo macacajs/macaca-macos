@@ -269,6 +269,15 @@ export const jxaUtil = {
     }, [ mouseLib, opts ]);
   },
 
+  // FIXME not work
+  async drag(x: number, y: number) {
+    const mouseLib = `${Helper.getResourcePath()}/javascript/mouse.js`;
+    await execJxa((lib, x, y) => {
+      const mouse = requireHack(lib);
+      mouse.drag(x, y);
+    }, [ mouseLib, x, y ]);
+  },
+
   async asSafeActivate(appName: string) {
     await execJxa((appName) => {
       const win = Library('window');

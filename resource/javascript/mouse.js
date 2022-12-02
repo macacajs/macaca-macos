@@ -66,9 +66,8 @@ function click(opts = {}) {
 }
 
 // drag从特定位置按下，拖拽到指定位置
-function drag(tx, ty, cx = location().mx, cy = location().my, r = null) {
-    const t_coords = { x: tx, y: ty } //拖拽末尾坐标
-    console.log('drag:', cx, cy)
+function drag(tx, ty, cx = location().mx, cy = location().my) {
+    const t_coords = { x: tx, y: ty } // 拖拽末尾坐标
     down(cx, cy)
     mouse_event(left_mouse_drag, t_coords)
     delay(0.5)
@@ -76,7 +75,7 @@ function drag(tx, ty, cx = location().mx, cy = location().my, r = null) {
 }
 
 // move是在鼠标没有点击的状态下进行移动
-function move(x, y, r = null) {
+function move(x, y) {
     const coords = { x: x, y: y }
     mouse_event(mouse_move, coords)
 }

@@ -20,6 +20,15 @@ describe('macaca-macos unit testing', function() {
     assert(res);
   });
 
+  it('mouse drag should be ok', async function() {
+    this.timeout(0);
+    await Helper.sleep(5E3);
+    await driver.mouseDrag(100, 100);
+    const res = driver.mouseGetPos();
+    console.log(res);
+    assert(res.x === 100);
+  });
+
   it('AppleScript mouseClick should be ok', async () => {
     driver.mouseClick({
       driver: EDriver.AppleScript,

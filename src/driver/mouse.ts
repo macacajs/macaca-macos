@@ -2,6 +2,7 @@ import robot from 'robotjs';
 import { Helper } from '../core/helper';
 import { EDriver } from '../core/enums';
 import { osaUtil } from '../core/jxa/osaUtil';
+import { jxaUtil } from '../core/jxa/jxaUtil';
 
 export default class MouseDriver {
   mouseMoveTo(x: number, y: number) {
@@ -30,8 +31,8 @@ export default class MouseDriver {
     robot.mouseClick(button, doubleClick);
   }
 
-  mouseDrag(x: number, y: number) {
-    robot.dragMouse(x, y);
+  async mouseDrag(x: number, y: number) {
+    await jxaUtil.drag(x, y);
   }
 
   mouseGetPos() {
