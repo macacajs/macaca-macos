@@ -62,8 +62,8 @@ program
     const driver = new MacacaMacOS();
     await driver.resizePosition({
       name: appName,
-      topLeftX: Number.parseInt(position.split(','))[0],
-      topLeftY: Number.parseInt(position.split(','))[1],
+      topLeftX: Number.parseInt(position.split(',')[0]),
+      topLeftY: Number.parseInt(position.split(',')[1]),
       width, height,
     });
     console.log('success');
