@@ -36,13 +36,15 @@ describe('macaca-macos unit testing', function() {
     assert(res.ocrRes);
   });
 
-  it('AppleScript mouseClick should be ok', async () => {
+  it.skip('AppleScript mouseClick should be ok', async () => {
+    this.timeout(0);
     driver.mouseClick({
       driver: EDriver.AppleScript,
     });
   });
 
   it('Clipboard actions should be ok', async () => {
+    this.timeout(0);
     const str = 'Hello world.';
     await driver.setClipText(str);
     const res = await driver.getClipText();
