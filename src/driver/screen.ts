@@ -1,7 +1,29 @@
 import shell from 'shelljs';
 import robot from 'robotjs';
+import fs from 'fs';
+import { Helper } from '../core/helper';
 
 export default class ScreenDriver {
+
+  /**
+   * 使用系统ocr能力
+   */
+  screenOcr(opts: {
+    picFile?: string;
+    rectangle?: string; // 通过矩形框 x,y,width,height
+  } = {}) {
+    const { picFile, rectangle } = opts;
+    const saveFile = picFile || `${Helper.tmpdir()}/${Date.now()}.png`;
+    if (!fs.existsSync(saveFile)) {
+      this.screenShot(saveFile, { rectangle });
+    }
+    const resStr = shell.exec(`${Helper.getResourcePath()}/swift/ocr ${saveFile}`, { silent: true }).stdout;
+    return {
+      imgFile: saveFile,
+      ocrRes: JSON.parse(resStr),
+    };
+  }
+
   screenGetSize() {
     return robot.getScreenSize();
   }
@@ -22,7 +44,6 @@ export default class ScreenDriver {
    * @param opts
    */
   screenShot(picFile: string, opts: {
-    rename?: string;
     rectangle?: string; // 通过矩形框 x,y,width,height
   } = {}) {
     const { rectangle } = opts;

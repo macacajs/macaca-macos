@@ -22,11 +22,18 @@ describe('macaca-macos unit testing', function() {
 
   it('mouse drag should be ok', async function() {
     this.timeout(0);
-    await Helper.sleep(5E3);
+    await Helper.sleep(3E3);
     await driver.mouseDrag(100, 100);
     const res = driver.mouseGetPos();
     console.log(res);
     assert(res.x === 100);
+  });
+
+  it.skip('screen ocr should be ok', async function() {
+    this.timeout(0);
+    const res = driver.screenOcr();
+    console.log(JSON.stringify(res, null, 2));
+    assert(res.ocrRes);
   });
 
   it('AppleScript mouseClick should be ok', async () => {
