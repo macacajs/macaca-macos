@@ -24,6 +24,14 @@
 $ npm i macaca-macos --save-dev
 ```
 
+## Usage
+```ts
+import MacacaMacOS from 'macaca-macos';
+
+const driver = new MacacaMacOS();
+await driver.startApp('/System/Applications/Notes.app');
+```
+
 <!-- GITCONTRIBUTOR_START -->
 
 ## Contributors

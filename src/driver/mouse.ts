@@ -2,6 +2,7 @@ import robot from 'robotjs';
 import { Helper } from '../core/helper';
 import { EDriver } from '../core/enums';
 import { osaUtil } from '../core/jxa/osaUtil';
+import { jxaUtil } from '../core/jxa/jxaUtil';
 
 export default class MouseDriver {
   mouseMoveTo(x: number, y: number) {
@@ -30,8 +31,23 @@ export default class MouseDriver {
     robot.mouseClick(button, doubleClick);
   }
 
-  mouseDrag(x: number, y: number) {
+  /**
+   * 从当前位置拖拽到目标位置
+   * FIXME 无法拖拽应用窗口
+   * @param x
+   * @param y
+   * @param opts
+   */
+  async mouseDrag(x: number, y: number, opts: {
+    driver?: EDriver;
+  } = {}) {
+    if (opts.driver === EDriver.JXA) {
+      await jxaUtil.drag(x, y);
+    }
+    // default robotjs
+    robot.mouseToggle('down');
     robot.dragMouse(x, y);
+    robot.mouseToggle('up');
   }
 
   mouseGetPos() {

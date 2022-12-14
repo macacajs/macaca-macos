@@ -239,7 +239,6 @@ export const jxaUtil = {
     Helper.debug(res);
     return res;
   },
-
   /**
    * 激活聚焦
    * @param appName
@@ -268,6 +267,15 @@ export const jxaUtil = {
       const mouse = requireHack(lib);
       mouse.click(opts);
     }, [ mouseLib, opts ]);
+  },
+
+  // FIXME not work
+  async drag(x: number, y: number) {
+    const mouseLib = `${Helper.getResourcePath()}/javascript/mouse.js`;
+    await execJxa((lib, x, y) => {
+      const mouse = requireHack(lib);
+      mouse.drag(x, y);
+    }, [ mouseLib, x, y ]);
   },
 
   async asSafeActivate(appName: string) {

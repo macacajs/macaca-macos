@@ -1,20 +1,33 @@
 import os from 'os';
 import fs from 'fs';
+import npmUpdate from 'npm-update';
 
 const path = require('path');
 
+
 export class Helper {
 
-  /**
-   * 获取版本
-   */
-  static getPkgVersion(): string {
+  static async isDeprecated() {
+    await npmUpdate({
+      pkg: this.getPkg(),
+    });
+  }
+
+  static getPkg() {
     let pkg: any = {};
     if (__dirname.includes('/dist/src/core')) {
       pkg = require('../../../package.json');
     } else {
       pkg = require('../../package.json');
     }
+    return pkg;
+  }
+
+  /**
+   * 获取版本
+   */
+  static getPkgVersion(): string {
+    const pkg = this.getPkg();
     return pkg.version;
   }
 
@@ -29,10 +42,7 @@ export class Helper {
   }
 
   static getResourcePath(): string {
-    if (__dirname.includes('/dist/src/core')) {
-      return path.resolve(__dirname, '../../resource');
-    }
-    return path.resolve(__dirname, '../resource');
+    return path.resolve(__dirname, '../../resource');
   }
 
   /**
