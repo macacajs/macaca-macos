@@ -45,7 +45,7 @@
     "macaca-macos": "./dist/bin/macaca-macos.js"
   },
   "scripts": {
-    "test": "nyc --reporter=lcov --reporter=text mocha 'test/**/*.test.ts' --require ts-node/register --recursive",
+    "test": "nyc --reporter=lcov --reporter=text mocha 'test/**/*.test.ts' --require ts-node/register --recursive --timeout 600000",
     "lint": "eslint . --ext .ts,js",
     "build": "sh ./build.sh",
     "prepublishOnly": "npm run build",

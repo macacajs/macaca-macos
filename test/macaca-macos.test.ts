@@ -9,6 +9,7 @@ describe('macaca-macos unit testing', function() {
   let res;
 
   it.skip('isAppRunning should be ok', async () => {
+    this.timeout(0);
     assert(driver);
     await driver.startApp('/System/Applications/Notes.app');
     res = await driver.isAppRunning('Notes');
@@ -16,6 +17,7 @@ describe('macaca-macos unit testing', function() {
   });
 
   it('mouseGetPos should be ok', async () => {
+    this.timeout(0);
     const res = driver.mouseGetPos();
     assert(res);
   });
@@ -67,7 +69,7 @@ describe('macaca-macos unit testing', function() {
   });
 
   describe.skip('Network driver test', function() {
-
+    this.timeout(0);
     it('wifi device name should work', async function() {
       this.timeout(0);
       const name = driver.getWifiDeviceName();
