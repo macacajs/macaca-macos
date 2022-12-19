@@ -51,7 +51,7 @@ export default class MouseDriver {
     }
     // default swift
     const curr_pos = this.mouseGetPos();
-    shell.exec(`${Helper.getResourcePath()}/swift/mouse-drag 10 ${curr_pos.x} ${curr_pos.y} ${x} ${y}`, { silent: false });
+    shell.exec(`${Helper.getResourcePath()}/swift/mouse-drag 10 ${curr_pos.x} ${curr_pos.y} ${x} ${y}`, { silent: true });
   }
 
   mouseGetPos() {
