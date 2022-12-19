@@ -43,3 +43,7 @@ await driver.startApp('/System/Applications/Notes.app');
 This project follows the git-contributor [spec](https://github.com/xudafeng/git-contributor), auto updated at `Mon Aug 29 2022 00:09:09 GMT+0800`.
 
 <!-- GITCONTRIBUTOR_END -->
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=macacajs/macaca-macos&type=Date)](https://star-history.com/#macacajs/macaca-macos&Date)
