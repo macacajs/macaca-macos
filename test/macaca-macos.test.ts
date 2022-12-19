@@ -22,7 +22,7 @@ describe('macaca-macos unit testing', function() {
     assert(res);
   });
 
-  it('mouse drag should be ok', async function() {
+  it.skip('mouse drag should be ok', async function() {
     this.timeout(0);
     await Helper.sleep(3E3);
     await driver.mouseDrag(100, 100);
@@ -31,7 +31,7 @@ describe('macaca-macos unit testing', function() {
     assert(res.x === 100 && res.y === 100);
   });
 
-  it('screen ocr should be ok', async function() {
+  it.skip('screen ocr should be ok', async function() {
     this.timeout(0);
     const res = driver.screenOcr();
     console.log(JSON.stringify(res, null, 2));
