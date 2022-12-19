@@ -1,4 +1,5 @@
 import robot from 'robotjs';
+import shell from 'shelljs';
 import { Helper } from '../core/helper';
 import { EDriver } from '../core/enums';
 import { osaUtil } from '../core/jxa/osaUtil';
@@ -33,7 +34,6 @@ export default class MouseDriver {
 
   /**
    * 从当前位置拖拽到目标位置
-   * FIXME 无法拖拽应用窗口
    * @param x
    * @param y
    * @param opts
@@ -43,11 +43,15 @@ export default class MouseDriver {
   } = {}) {
     if (opts.driver === EDriver.JXA) {
       await jxaUtil.drag(x, y);
+    } else if (opts.driver === EDriver.RobotJs) {
+      // Robotjs 存在无法拖动app窗口的问题
+      robot.mouseToggle('down');
+      robot.dragMouse(x, y);
+      robot.mouseToggle('up');
     }
-    // default robotjs
-    robot.mouseToggle('down');
-    robot.dragMouse(x, y);
-    robot.mouseToggle('up');
+    // default swift
+    const curr_pos = this.mouseGetPos();
+    shell.exec(`${Helper.getResourcePath()}/swift/mouse-drag 10 ${curr_pos.x} ${curr_pos.y} ${x} ${y}`, { silent: true });
   }
 
   mouseGetPos() {
