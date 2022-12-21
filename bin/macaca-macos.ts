@@ -6,6 +6,7 @@
 
 import MacacaMacOS from '..';
 import { Helper } from '../src/core/helper';
+import path from 'path';
 
 process.setMaxListeners(0);
 process.on('uncaughtException', function(err) {
@@ -67,6 +68,28 @@ program
       width, height,
     });
     console.log('success');
+  });
+
+program
+  .command('ocr [target]')
+  .description('app或图片ocr')
+  .action(async (target) => {
+    const driver = new MacacaMacOS();
+    let res;
+    if (target.endsWith('.png') || target.endsWith('.jpg')) {
+      target = target.startsWith('/') ? target : path.resolve(process.cwd(), target);
+      res = driver.screenOcr({
+        picFile: target,
+      });
+    } else {
+      const appName = target;
+      await driver.focusApp(appName);
+      const rect = await driver.getAppSizePosition(appName);
+      res = driver.screenOcr({
+        rectangle: `${rect.topLeftX},${rect.topLeftY},${rect.width},${rect.height}`,
+      });
+    }
+    console.log(JSON.stringify(res, null, 2));
   });
 
 program.parse(process.argv);
