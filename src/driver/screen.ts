@@ -11,16 +11,21 @@ export default class ScreenDriver {
   screenOcr(opts: {
     picFile?: string;
     rectangle?: string; // 通过矩形框 x,y,width,height
+    count?: number; // 支持多次结果合并返回,增强识别率
   } = {}) {
-    const { picFile, rectangle } = opts;
+    const { picFile, rectangle, count = 1 } = opts;
     const saveFile = picFile || `${Helper.tmpdir()}/${Date.now()}.png`;
     if (!fs.existsSync(saveFile)) {
       this.screenShot(saveFile, { rectangle });
     }
-    const resStr = shell.exec(`${Helper.getResourcePath()}/swift/ocr ${saveFile}`, { silent: true }).stdout;
+    const ocrRes = [];
+    for (let i = 0; i < count; i++) {
+      const resStr = shell.exec(`${Helper.getResourcePath()}/swift/ocr ${saveFile}`, { silent: true }).stdout;
+      ocrRes.push(...JSON.parse(resStr));
+    }
     return {
       imgFile: saveFile,
-      ocrRes: JSON.parse(resStr),
+      ocrRes,
     };
   }
 
