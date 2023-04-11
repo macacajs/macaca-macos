@@ -4,6 +4,7 @@ import { EDriver } from '../src/core/enums';
 import assert from 'power-assert';
 
 describe('macaca-macos unit testing', function() {
+  this.timeout(0);
   process.env.MACACA_MACOS_DEBUG = 'true';
   const driver = new MacacaMacOS();
   let res;
@@ -19,6 +20,16 @@ describe('macaca-macos unit testing', function() {
   it('mouseGetPos should be ok', async () => {
     this.timeout(0);
     const res = driver.mouseGetPos();
+    assert(res);
+  });
+
+  // 测试
+  it.skip('mouseClickText should be ok', async () => {
+    this.timeout(0);
+    const res = driver.mouseClickText({
+      text: '测试',
+      shiftX: 100,
+    });
     assert(res);
   });
 
