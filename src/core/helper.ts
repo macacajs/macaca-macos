@@ -3,9 +3,28 @@ import fs from 'fs';
 import npmUpdate from 'npm-update';
 
 const path = require('path');
-
+const shell = require('shelljs');
 
 export class Helper {
+
+  /**
+   * 检测4k屏
+   */
+  static isHdpiDisplay(): boolean {
+    const res = shell.exec('system_profiler SPDisplaysDataType | grep Resolution', { silent: true }).stdout.trim();
+    if (res) {
+      // 多个显示器只关注主显示器
+      const main = res.split('\n')[0].trim();
+      if (main.includes('Retina')) {
+        return true;
+      }
+      // 一般情况下 4k 高大于等于 2160 像素, 2k达不到这个高度，除非这是个造型很变态的2k显示器...
+      // 不用宽度做判断(存在宽屏显示器)
+      const mainY = Number.parseInt(main.split(' x ')[1].split(' ')[0]);
+      return mainY >= 2160;
+    }
+    console.log('无显示器信息');
+  }
 
   static async isDeprecated() {
     await npmUpdate({

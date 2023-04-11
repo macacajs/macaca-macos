@@ -4,6 +4,7 @@ import { Helper } from '../core/helper';
 import { EDriver } from '../core/enums';
 import { osaUtil } from '../core/jxa/osaUtil';
 import { jxaUtil } from '../core/jxa/jxaUtil';
+import ScreenDriver from './screen';
 
 export default class MouseDriver {
   mouseMoveTo(x: number, y: number) {
@@ -30,6 +31,46 @@ export default class MouseDriver {
       return osaUtil.click(pos);
     }
     robot.mouseClick(button, doubleClick);
+  }
+
+  /**
+   * 点击屏幕/目标区域的文案
+   * 依赖 ocr
+   * @param opts
+   */
+  mouseClickText(opts: {
+    text: string; // 目标文案
+    index?: number; // 重复项指针
+    rectangle?: string; // 截图目标区域 通过矩形框 x,y,width,height 默认全屏
+    clickOpts?: any;
+    shiftX?: number; // 偏移量
+    shiftY?: number;
+  }) {
+    const {
+      text, index, rectangle,
+      clickOpts = {},
+      shiftX = 0,
+      shiftY = 0,
+    } = opts;
+    const res = new ScreenDriver().getTextsPosition({
+      texts: [ text ],
+      index,
+      rectangle,
+    });
+    if (res.length) {
+      let { x, y } = res[0];
+      // 绝对位置
+      if (rectangle) {
+        x = Number.parseInt(rectangle.split(',')[0]) + x;
+        y = Number.parseInt(rectangle.split(',')[1]) + y;
+      }
+      // 偏移
+      x = x + shiftX;
+      y = y + shiftY;
+      this.mouseMoveTo(x, y);
+      this.mouseClick(clickOpts);
+      return true;
+    }
   }
 
   /**
