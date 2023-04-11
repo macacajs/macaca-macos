@@ -47,7 +47,7 @@ export default class ScreenDriver {
       contains = true,
     } = opts;
     // 获取文案位置
-    const { ocrRes } = new ScreenDriver().screenOcr({ rectangle });
+    const { ocrRes } = this.screenOcr({ rectangle });
     const resultList = [];
     // 找多个目标
     for (const text of texts) {
