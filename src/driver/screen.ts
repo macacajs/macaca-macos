@@ -8,6 +8,17 @@ export default class ScreenDriver {
   hidpi = Helper.isHdpiDisplay();
 
   /**
+   * 暴露ocr方法，支持通过重写使用三方能力替代
+   */
+  fileOcr(imgFile: string): {
+    rect: { left, top, height, width };
+    word: string;
+  }[] {
+    const resStr = shell.exec(`${Helper.getResourcePath()}/swift/ocr ${imgFile}`, { silent: true }).stdout;
+    return JSON.parse(resStr);
+  }
+
+  /**
    * 使用系统ocr能力
    */
   screenOcr(opts: {
@@ -22,13 +33,28 @@ export default class ScreenDriver {
     }
     const ocrRes = [];
     for (let i = 0; i < count; i++) {
-      const resStr = shell.exec(`${Helper.getResourcePath()}/swift/ocr ${saveFile}`, { silent: true }).stdout;
-      ocrRes.push(...JSON.parse(resStr));
+      ocrRes.push(...this.fileOcr(saveFile));
     }
     return {
       imgFile: saveFile,
       ocrRes,
     };
+  }
+
+  /**
+   * 检查文案存在
+   */
+  checkTextExist(opts: {
+    text: string;
+    picFile?: string; // 可直接指定图片
+    rectangle?: string; // 截图目标区域 通过矩形框 x,y,width,height 默认全屏
+  }): boolean {
+    const { text, picFile, rectangle } = opts;
+    const res = this.getTextsPosition({
+      texts: [ text ],
+      picFile, rectangle,
+    });
+    return !!res.length;
   }
 
   /**
@@ -39,15 +65,16 @@ export default class ScreenDriver {
     texts: string[]; // 目标文案
     index?: number; // 重复项指针
     contains?: boolean; // 包含即可
+    picFile?: string; // 可直接指定图片
     rectangle?: string; // 截图目标区域 通过矩形框 x,y,width,height 默认全屏
   }) {
     const {
-      texts, rectangle,
+      texts, rectangle, picFile,
       index = 0,
       contains = true,
     } = opts;
     // 获取文案位置
-    const { ocrRes } = this.screenOcr({ rectangle });
+    const { ocrRes } = this.screenOcr({ picFile, rectangle });
     const resultList = [];
     // 找多个目标
     for (const text of texts) {
