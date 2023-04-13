@@ -33,6 +33,36 @@ describe('macaca-macos unit testing', function() {
     assert(res);
   });
 
+  it.skip('checkTextExist should be ok', async () => {
+    this.timeout(0);
+    const res = driver.checkTextExist({
+      text: '文案存在',
+    });
+    assert(res);
+  });
+
+  it.skip('overwrite should be ok', async () => {
+    this.timeout(0);
+    driver.fileOcr = (imgFile) => {
+      console.log(imgFile);
+      return [
+        {
+          word: '哈哈',
+          rect: {
+            left: 0,
+            top: 1,
+            height: 100,
+            width: 100,
+          },
+        },
+      ];
+    };
+    const res = driver.checkTextExist({
+      text: '哈哈',
+    });
+    assert(res);
+  });
+
   it.skip('mouse drag should be ok', async function() {
     this.timeout(0);
     await Helper.sleep(3E3);
