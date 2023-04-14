@@ -43,7 +43,7 @@ describe('macaca-macos unit testing', function() {
 
   it.skip('overwrite should be ok', async () => {
     this.timeout(0);
-    driver.fileOcr = (imgFile) => {
+    driver.fileOcr = async (imgFile) => {
       console.log(imgFile);
       return [
         {
@@ -74,7 +74,7 @@ describe('macaca-macos unit testing', function() {
 
   it.skip('screen ocr should be ok', async function() {
     this.timeout(0);
-    const res = driver.screenOcr();
+    const res = await driver.screenOcr();
     console.log(JSON.stringify(res, null, 2));
     assert(res.ocrRes);
   });
