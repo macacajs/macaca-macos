@@ -38,7 +38,7 @@ export default class MouseDriver {
    * 依赖 ocr
    * @param opts
    */
-  mouseClickText(opts: {
+  async mouseClickText(opts: {
     text: string; // 目标文案
     index?: number; // 重复项指针
     rectangle?: string; // 截图目标区域 通过矩形框 x,y,width,height 默认全屏
@@ -52,7 +52,7 @@ export default class MouseDriver {
       shiftX = 0,
       shiftY = 0,
     } = opts;
-    const res = new ScreenDriver().getTextsPosition({
+    const res = await new ScreenDriver().getTextsPosition({
       texts: [ text ],
       index,
       rectangle,

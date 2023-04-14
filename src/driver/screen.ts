@@ -10,10 +10,10 @@ export default class ScreenDriver {
   /**
    * 暴露ocr方法，支持通过重写使用三方能力替代
    */
-  fileOcr(imgFile: string): {
+  async fileOcr(imgFile: string): Promise<{
     rect: { left, top, height, width };
     word: string;
-  }[] {
+  }[]> {
     const resStr = shell.exec(`${Helper.getResourcePath()}/swift/ocr ${imgFile}`, { silent: true }).stdout;
     return JSON.parse(resStr);
   }
@@ -21,7 +21,7 @@ export default class ScreenDriver {
   /**
    * 使用系统ocr能力
    */
-  screenOcr(opts: {
+  async screenOcr(opts: {
     picFile?: string;
     rectangle?: string; // 通过矩形框 x,y,width,height
     count?: number; // 支持多次结果合并返回,增强识别率
@@ -33,7 +33,8 @@ export default class ScreenDriver {
     }
     const ocrRes = [];
     for (let i = 0; i < count; i++) {
-      ocrRes.push(...this.fileOcr(saveFile));
+      const res = await this.fileOcr(saveFile);
+      ocrRes.push(...res);
     }
     return {
       imgFile: saveFile,
@@ -44,13 +45,13 @@ export default class ScreenDriver {
   /**
    * 检查文案存在
    */
-  checkTextExist(opts: {
+  async checkTextExist(opts: {
     text: string;
     picFile?: string; // 可直接指定图片
     rectangle?: string; // 截图目标区域 通过矩形框 x,y,width,height 默认全屏
-  }): boolean {
+  }): Promise<boolean> {
     const { text, picFile, rectangle } = opts;
-    const res = this.getTextsPosition({
+    const res = await this.getTextsPosition({
       texts: [ text ],
       picFile, rectangle,
     });
@@ -61,7 +62,7 @@ export default class ScreenDriver {
    * 获取文案在截图区域的位置
    * @param opts
    */
-  getTextsPosition(opts: {
+  async getTextsPosition(opts: {
     texts: string[]; // 目标文案
     index?: number; // 重复项指针
     contains?: boolean; // 包含即可
@@ -74,7 +75,7 @@ export default class ScreenDriver {
       contains = true,
     } = opts;
     // 获取文案位置
-    const { ocrRes } = this.screenOcr({ picFile, rectangle });
+    const { ocrRes } = await this.screenOcr({ picFile, rectangle });
     const resultList = [];
     // 找多个目标
     for (const text of texts) {

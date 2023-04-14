@@ -78,14 +78,14 @@ program
     let res;
     if (target.endsWith('.png') || target.endsWith('.jpg')) {
       target = target.startsWith('/') ? target : path.resolve(process.cwd(), target);
-      res = driver.screenOcr({
+      res = await driver.screenOcr({
         picFile: target,
       });
     } else {
       const appName = target;
       await driver.focusApp(appName);
       const rect = await driver.getAppSizePosition(appName);
-      res = driver.screenOcr({
+      res = await driver.screenOcr({
         rectangle: `${rect.topLeftX},${rect.topLeftY},${rect.width},${rect.height}`,
       });
     }
