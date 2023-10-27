@@ -7,7 +7,7 @@ const scptDir = `${Helper.getResourcePath()}/applescript/scpt`;
 // 直接执行 AppleScript 脚本/脚本包
 export const osaUtil = {
 
-  async execAppleScriptStr(funcStr): Promise<any> {
+  async execAppleScriptStr(funcStr: string): Promise<any> {
     return new Promise((resolve, reject) => {
       applescript.execString(funcStr, (err, rtn) => {
         if (err) {

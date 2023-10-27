@@ -37,7 +37,6 @@
     "macaca-ecosystem": "1",
     "mocha": "8",
     "nyc": "^13.1.0",
-    "power-assert": "^1.6.1",
     "ts-node": "^10.9.1",
     "typescript": "4"
   },

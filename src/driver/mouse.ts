@@ -5,6 +5,9 @@ import { EDriver } from '../core/enums';
 import { osaUtil } from '../core/jxa/osaUtil';
 import { jxaUtil } from '../core/jxa/jxaUtil';
 import ScreenDriver from './screen';
+import os from 'os';
+import assert from 'assert';
+import fs from 'fs';
 
 export default class MouseDriver {
   mouseMoveTo(x: number, y: number) {
@@ -92,7 +95,9 @@ export default class MouseDriver {
     }
     // default swift
     const curr_pos = this.mouseGetPos();
-    shell.exec(`${Helper.getResourcePath()}/swift/mouse-drag 10 ${curr_pos.x} ${curr_pos.y} ${x} ${y}`, { silent: true });
+    const cmdFile = `${Helper.getResourcePath()}/swift/mouse-drag-${os.arch()}`;
+    assert(fs.existsSync(cmdFile), `不支持的架构: ${os.arch()}`);
+    shell.exec(`${cmdFile} 10 ${curr_pos.x} ${curr_pos.y} ${x} ${y}`, { silent: true });
   }
 
   mouseGetPos() {
