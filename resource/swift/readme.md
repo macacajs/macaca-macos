@@ -11,4 +11,3 @@ bash ./build.sh
 - mouse-drag
   - mouse drag to (+x,+y) relate to current point
   - mouse-drag delay x y
-

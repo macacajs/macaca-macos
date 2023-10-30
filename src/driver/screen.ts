@@ -2,6 +2,8 @@ import shell from 'shelljs';
 import robot from 'robotjs';
 import fs from 'fs';
 import { Helper } from '../core/helper';
+import os from 'os';
+import assert from 'assert';
 
 export default class ScreenDriver {
 
@@ -11,10 +13,17 @@ export default class ScreenDriver {
    * 暴露ocr方法，支持通过重写使用三方能力替代
    */
   async fileOcr(imgFile: string): Promise<{
-    rect: { left, top, height, width };
+    rect: {
+      left: number;
+      top: number;
+      height: number;
+      width: number;
+    };
     word: string;
   }[]> {
-    const resStr = shell.exec(`${Helper.getResourcePath()}/swift/ocr ${imgFile}`, { silent: true }).stdout;
+    const cmdFile = `${Helper.getResourcePath()}/swift/ocr-${os.arch()}`;
+    assert(fs.existsSync(cmdFile), `不支持的架构: ${os.arch()}`);
+    const resStr = shell.exec(`${cmdFile} ${imgFile}`, { silent: true }).stdout;
     return JSON.parse(resStr);
   }
 
@@ -100,7 +109,13 @@ export default class ScreenDriver {
     return resultList;
   }
 
-  screenGetSize() {
+  /**
+   * 含头部的系统状态栏
+   */
+  screenGetSize(): {
+    width: number;
+    height: number;
+  } {
     return robot.getScreenSize();
   }
 
